@@ -2,7 +2,7 @@
 
 Automatically rename files whose names contain characters that are invalid on Android or that break Obsidian links.
 
-> This plugin is based on [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter) by [sneaky-foxes](https://github.com/sneaky-foxes), released under the GPL-3.0. It keeps the original commands and settings, and adds automatic renaming. See [Changes from Safe Filename Linter](#changes-from-safe-filename-linter).
+> This plugin is based on [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter) by [sneakyfoxes](https://github.com/sneakyfoxes), released under the GPL-3.0. It keeps the original commands and settings, and adds automatic renaming. See [Changes from Safe Filename Linter](#changes-from-safe-filename-linter).
 
 ## Why
 
@@ -79,7 +79,7 @@ Any other language falls back to English. To add a translation, add its strings 
 
 ## Credits
 
-- [sneaky-foxes](https://github.com/sneaky-foxes) ([Kat Tipton](https://github.com/lomky)), original author of [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter), on which this plugin is based.
+- [sneakyfoxes](https://github.com/sneakyfoxes) ([lomky](https://github.com/lomky) and [rocketnova](https://github.com/rocketnova)), original authors of [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter), on which this plugin is based.
 - [Robert Garrigós](https://github.com/robertgarrigos), automatic renaming, translations and maintenance.
 
 ## License
