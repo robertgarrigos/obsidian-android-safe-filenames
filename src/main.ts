@@ -1,7 +1,7 @@
 import { Notice, Plugin, TAbstractFile, TFile, normalizePath } from 'obsidian';
-import SafeFilenameLinterSettingTab from './settings';
+import AndroidSafeFilenamesSettingTab from './settings';
 
-interface SafeFilenameLinterSettings {
+interface AndroidSafeFilenamesSettings {
 	autoLint: boolean;
 	squareBrackets: string;
 	numberSign: string;
@@ -18,7 +18,7 @@ interface SafeFilenameLinterSettings {
 // See https://docs.obsidian.md/Reference/TypeScript+API/Notice/(constructor)
 const NOTICE_DURATION = 10000;
 
-const DEFAULT_SETTINGS: SafeFilenameLinterSettings = {
+const DEFAULT_SETTINGS: AndroidSafeFilenamesSettings = {
 	autoLint: false,
 	squareBrackets: 'off',
 	numberSign: 'off',
@@ -31,8 +31,8 @@ const DEFAULT_SETTINGS: SafeFilenameLinterSettings = {
 	angleBrackets: 'off',
 };
 
-export default class SafeFilenameLinter extends Plugin {
-	settings: SafeFilenameLinterSettings;
+export default class AndroidSafeFilenames extends Plugin {
+	settings: AndroidSafeFilenamesSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -70,17 +70,21 @@ export default class SafeFilenameLinter extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SafeFilenameLinterSettingTab(this.app, this));
+		this.addSettingTab(new AndroidSafeFilenamesSettingTab(this.app, this));
 
 		// Automatically lint files when they are created or renamed.
 		// Registered inside onLayoutReady so we don't receive a create event for every file on vault load.
 		// See https://docs.obsidian.md/Reference/TypeScript+API/Vault/on('create')
 		this.app.workspace.onLayoutReady(() => {
 			this.registerEvent(
-				this.app.vault.on('create', (file) => this.autoLintFilename(file)),
+				this.app.vault.on('create', (file) =>
+					this.autoLintFilename(file),
+				),
 			);
 			this.registerEvent(
-				this.app.vault.on('rename', (file) => this.autoLintFilename(file)),
+				this.app.vault.on('rename', (file) =>
+					this.autoLintFilename(file),
+				),
 			);
 		});
 	}
@@ -218,7 +222,10 @@ export default class SafeFilenameLinter extends Plugin {
 				await this.app.fileManager.renameFile(file, newFilepath);
 
 				// If the file was successfully rename, alert the user
-				new Notice(`"${oldFilename}" renamed to "${newFilename}"`, NOTICE_DURATION);
+				new Notice(
+					`"${oldFilename}" renamed to "${newFilename}"`,
+					NOTICE_DURATION,
+				);
 			} catch (error) {
 				// If there was an error, alert the user.
 				new Notice(

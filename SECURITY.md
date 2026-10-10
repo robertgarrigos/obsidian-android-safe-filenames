@@ -5,7 +5,7 @@ We provide security updates for the latest major.minor release.
 
 ## Reporting a Vulnerability
 
-Report vulnerabilities in this plugin to ktipton (at) duck.com.
+Report vulnerabilities in this plugin privately through GitHub: open the repository's **Security** tab and choose **Report a vulnerability**.
 
 Consider checking whether the vulnerability exists in the [Obsidian Sample Plugin](https://github.com/obsidianmd/obsidian-sample-plugin), on which this code was based, and reporting there.
 

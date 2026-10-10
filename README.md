@@ -1,49 +1,65 @@
-# Obsidian Filename Linter Plugin
+# Android Safe Filenames
 
-## Description
+Automatically rename files whose names contain characters that are invalid on Android or that break Obsidian links.
 
-Lint filenames for invalid or troublesome characters, such as pipes, colons, and brackets.
+> This plugin is based on [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter) by [sneaky-foxes](https://github.com/sneaky-foxes), released under the GPL-3.0. It keeps the original commands and settings, and adds automatic renaming. See [Changes from Safe Filename Linter](#changes-from-safe-filename-linter).
 
-Useful for Obsidian users who create notes via external means or sync their notes across various platforms.
+## Why
 
-Handles characters that cause issues for Obsidian itself along with characters that are invalid in Android filenames.
+macOS, Linux and Windows let you create files with characters such as `?` or `:` in their names, but Android shared storage does not. If you sync your vault to an Android phone (with Syncthing, Unison, git or similar), those files fail to sync.
+
+This plugin renames them for you, using Obsidian's own rename so internal links are updated according to your vault settings.
+
+## Characters handled
+
+Android invalid characters:
+
+- asterisk `*`
+- question mark `?`
+- double quote `"`
+- angle brackets `<` `>`
+- colon `:`
+- pipe `|`
+
+Characters that cause issues for Obsidian links:
+
+- square brackets `[` `]`
+- number sign `#`
+- caret `^`
+
+For each one you choose the replacement: off, empty string, space, hyphen, or hyphen surrounded by spaces. Everything is off by default. Accented and other non-ASCII letters are never changed.
 
 ## Using the plugin
 
-### Manual invocation
+### Automatic renaming
 
-This plugin adds two commands.
-
-- `Safe filename linter: Lint the current filename`
-- `Safe filename linter: Lint all filesnames in the vault`
-
-These commands rename files by replacing invalid or troublesome characters with characters of your choice. The renaming action uses the Obsidian renaming calls and will follow your vault settings for updating internal links (Prompted or Automatic). Be prepared to be patient if you have a large vault with many required renames.
-
-### Automatic invocation
-
-Enable `Lint automatically` in the plugin settings to lint filenames whenever a file is created or renamed, including files added by sync. It is off by default.
+Enable `Lint automatically` in the plugin settings to rename files whenever they are created or renamed, including files added by sync. It is off by default.
 
 Files that already exist when you enable it are not renamed until you run `Lint all filenames in the vault` or rename them.
 
-### Credits
+### Commands
 
-We are grateful to the developers of Obsidian for the [Obisidan Sample Plugin](obsidianmd/obsidian-sample-plugin) for the basis of this plugin, and to [Obsidian Filename Emoji Remover Plugin](https://github.com/YTolun/obsidian-filename-emoji-remover), whose code we read and experimented with before diving into writing our own plugin.
+- `Android Safe Filenames: Lint the current filename`
+- `Android Safe Filenames: Lint all filenames in the vault`
+
+If a file with the new name already exists, the file is left as it is and you get a notice.
+
+Back up your vault before linting all filenames for the first time.
 
 ## Installing the plugin
 
-### Community plugin directory
+### Manually
 
-1. Search for `Safe Filename Linter` in the directory
-2. Enable this project from the Community Plugins setting section
-3. Set up your preferred character replacements in the Safe Filename Linter Community Plugins section
+1. Download `main.js` and `manifest.json` from the latest release.
+2. Put them in `.obsidian/plugins/android-safe-filenames/` inside your vault.
+3. Enable `Android Safe Filenames` in Settings → Community plugins.
+4. Set up your preferred character replacements in the plugin settings.
 
-### Manually Install
+## Changes from Safe Filename Linter
 
-1. On the command line, navigate to your vault's `.obsidian/plugins` directory and run:
-   `git clone https://github.com/sneaky-foxes/obsidian-safe-filename-linter`
-   - Alternatively, download the latest release and place the `main.js` and `manifest.json` in the directory in `obsidian-safe-filename-linter`
-2. In your Obsidian vault, enable this project from the Community Plugins setting section
-3. Set up your preferred character replacements in the Safe Filename Linter Community Plugins section
+- New `Lint automatically` setting to rename files on create and rename.
+- Fixed notices disappearing immediately: their duration was set to 30 ms instead of 30 seconds. They now last 10 seconds.
+- New name, plugin id and documentation.
 
 ## Developing the plugin
 
@@ -65,7 +81,7 @@ When developing, ensure you are running `npm run dev` to keep the project buildi
 
 ### Contributing
 
-We welcome issues and pull requests for any characters that cause issues for Obsidian or any platform it runs on. We also welcome any additional replacement characters. This plugin has no desire to handle linting characters beyond functional filename use cases.
+Issues and pull requests are welcome for any characters that cause issues for Obsidian or any platform it runs on, and for additional replacement characters. This plugin only handles characters that stop filenames from working.
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for details on how to submit code.
 
@@ -99,7 +115,7 @@ For updates to the Obsidian API run `npm update` in the command line under your 
 4. Once the pull request has been merged, pull the new `main` branch: `git checkout main && git pull origin main`
 5. Tag the release commit: `git tag -a [version number without v] -m "[version number without v]"`. Example: `git tag -a 1.1.0 -m "1.1.0"`
 6. Push the tag to trigger release github action workflow: `git push --tags`
-7. Go to https://github.com/sneaky-foxes/obsidian-safe-filename-linter/releases and publish the release
+7. Go to https://github.com/robertgarrigos/obsidian-android-safe-filenames/releases and publish the release
 
 NB Because we are using Github's rebase merge strategy, we need to work around the fact that Github is not fast-forwarding commits and is instead creating new commits for the rebase. When we allowed the tag to be in the pull release, the tag would be on a headless commit. This approach ensures that the tags are on `main`.
 

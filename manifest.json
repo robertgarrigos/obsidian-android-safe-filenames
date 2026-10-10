@@ -1,10 +1,10 @@
 {
-	"id": "safe-filename-linter",
-	"name": "Safe Filename Linter",
-	"version": "1.2.0",
+	"id": "android-safe-filenames",
+	"name": "Android Safe Filenames",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Lints filenames for invalid or troublesome characters",
-	"author": "sneaky-foxes",
-	"authorUrl": "https://github.com/sneaky-foxes",
+	"description": "Automatically rename files whose names contain characters that are invalid on Android or troublesome for links. Based on Safe Filename Linter by sneaky-foxes.",
+	"author": "Robert Garrigós",
+	"authorUrl": "https://github.com/robertgarrigos",
 	"isDesktopOnly": false
 }

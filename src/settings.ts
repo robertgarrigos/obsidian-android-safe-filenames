@@ -1,10 +1,10 @@
 import { App, DropdownComponent, PluginSettingTab, Setting } from 'obsidian';
-import type SafeFilenameLinter from './main';
+import type AndroidSafeFilenames from './main';
 
-export default class SafeFilenameLinterSettingTab extends PluginSettingTab {
-	plugin: SafeFilenameLinter;
+export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
+	plugin: AndroidSafeFilenames;
 
-	constructor(app: App, plugin: SafeFilenameLinter) {
+	constructor(app: App, plugin: AndroidSafeFilenames) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
