@@ -50,9 +50,9 @@ const ca: Record<TranslationKey, string> = {
 	'command.lint-current': 'Corregeix el nom de la nota actual',
 	'command.lint-all': "Corregeix tots els noms d'arxiu del vault",
 
-	'notice.renamed': "«{old}» s'ha reanomenat a «{new}»",
+	'notice.renamed': "S'ha canviat el nom de «{old}» per «{new}»",
 	'notice.rename-failed':
-		"No s'ha pogut reanomenar «{old}» a «{new}». Probablement ja existeix un arxiu amb aquest nom",
+		"No s'ha pogut canviar el nom de «{old}» per «{new}». Probablement ja existeix un arxiu amb aquest nom",
 	'notice.linting-all': "S'estan corregint tots els noms d'arxiu...",
 	'notice.linted-all': "S'han corregit tots els noms d'arxiu",
 
@@ -60,7 +60,7 @@ const ca: Record<TranslationKey, string> = {
 		"Tingues en compte que Obsidian redueix automàticament els espais repetits dels noms d'arxiu i dels [[enllaços]] a un sol espai.",
 	'settings.auto-lint.name': 'Corregeix automàticament',
 	'settings.auto-lint.desc':
-		"Corregeix els noms d'arxiu automàticament quan es crea o es reanomena un arxiu, també quan arriba per sincronització.",
+		"Corregeix els noms d'arxiu automàticament quan es crea un arxiu o se'n canvia el nom, també quan arriba per sincronització.",
 
 	'option.off': 'desactivat',
 	'option.blank': 'eliminar',
