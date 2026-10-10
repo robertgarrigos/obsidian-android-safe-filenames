@@ -1,5 +1,13 @@
 import { App, DropdownComponent, PluginSettingTab, Setting } from 'obsidian';
 import type AndroidSafeFilenames from './main';
+import type { AndroidSafeFilenamesSettings } from './main';
+import { t, TranslationKey } from './i18n';
+
+// Settings that hold a replacement option for a group of characters
+type ReplacementSettingKey = Exclude<
+	keyof AndroidSafeFilenamesSettings,
+	'autoLint'
+>;
 
 export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 	plugin: AndroidSafeFilenames;
@@ -24,7 +32,7 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 
 		containerEl.createEl('p', {
-			text: 'Note that Obsidian will automatically truncate multiple spaces in filenames and [[links]] into one space.',
+			text: t('settings.intro'),
 		});
 	}
 
@@ -33,10 +41,8 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 
 		// Setting for automatic linting
 		new Setting(containerEl)
-			.setName('Lint automatically')
-			.setDesc(
-				'Lint filenames automatically when files are created or renamed, including files added by sync.',
-			)
+			.setName(t('settings.auto-lint.name'))
+			.setDesc(t('settings.auto-lint.desc'))
 			.addToggle((toggle) => {
 				toggle.setValue(this.plugin.settings.autoLint);
 				toggle.onChange(async (value) => {
@@ -47,145 +53,65 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 	}
 
 	addReplacementOptions(dropdown: DropdownComponent): void {
-		dropdown.addOption('off', 'off');
-		dropdown.addOption('blank', 'empty string');
-		dropdown.addOption('space', 'space');
-		dropdown.addOption('hyphen', 'hyphen');
-		dropdown.addOption('hyphen-space', 'hyphen surrounded by spaces');
+		dropdown.addOption('off', t('option.off'));
+		dropdown.addOption('blank', t('option.blank'));
+		dropdown.addOption('space', t('option.space'));
+		dropdown.addOption('hyphen', t('option.hyphen'));
+		dropdown.addOption('hyphen-space', t('option.hyphen-space'));
+	}
+
+	addReplacementSetting(
+		key: ReplacementSettingKey,
+		name: TranslationKey,
+		chars: string,
+	): void {
+		new Setting(this.containerEl)
+			.setName(t('settings.replacement.name', { name: t(name) }))
+			.setDesc(t('settings.replacement.desc', { chars }))
+			.addDropdown((dropdown) => {
+				this.addReplacementOptions(dropdown);
+				dropdown.setValue(this.plugin.settings[key]);
+				dropdown.onChange(async (value) => {
+					this.plugin.settings[key] = value;
+					await this.plugin.saveSettings();
+				});
+			});
 	}
 
 	obsidianChars(): void {
 		const { containerEl } = this;
 
-		containerEl.createEl('h2', { text: 'Obsidian troublesome characters' });
+		containerEl.createEl('h2', { text: t('settings.obsidian.heading') });
 		containerEl.createEl('p', {
-			text: "Obsidian itself won't let you use these in filenames and will remove them automatically. However, if you create files via external means they can creep in. These characters wreak havoc with [[links]] syntax.",
+			text: t('settings.obsidian.desc'),
 		});
 
-		// Setting for square brackets: []
-		new Setting(containerEl)
-			.setName('Replacement for square brackets')
-			.setDesc('Specify the replacement for [ and ]')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.squareBrackets);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.squareBrackets = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for number sign: #
-		new Setting(containerEl)
-			.setName('Replacement for number sign')
-			.setDesc('Specify the replacement for #')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.numberSign);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.numberSign = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for caret: ^
-		new Setting(containerEl)
-			.setName('Replacement for caret')
-			.setDesc('Specify the replacement for ^')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.caret);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.caret = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for pipe: |
-		new Setting(containerEl)
-			.setName('Replacement for pipe')
-			.setDesc('Specify the replacement for |')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.pipe);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.pipe = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for colon: :
-		new Setting(containerEl)
-			.setName('Replacement for colon')
-			.setDesc('Specify the replacement for :')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.colon);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.colon = value;
-					await this.plugin.saveSettings();
-				});
-			});
+		this.addReplacementSetting(
+			'squareBrackets',
+			'char.square-brackets',
+			t('settings.replacement.and', { a: '[', b: ']' }),
+		);
+		this.addReplacementSetting('numberSign', 'char.number-sign', '#');
+		this.addReplacementSetting('caret', 'char.caret', '^');
+		this.addReplacementSetting('pipe', 'char.pipe', '|');
+		this.addReplacementSetting('colon', 'char.colon', ':');
 	}
 
 	androidChars(): void {
 		const { containerEl } = this;
 
-		this.containerEl.createEl('h2', { text: 'Android invalid characters' });
-		this.containerEl.createEl('p', {
-			text: 'Obsidian for Android will not allow you to create filenames with these characters, but external programs and other Obsidian platforms will. If you sync your vault between Android and non-Android systems using git or other means, these may cause you issues.',
+		containerEl.createEl('h2', { text: t('settings.android.heading') });
+		containerEl.createEl('p', {
+			text: t('settings.android.desc'),
 		});
 
-		// Setting for asterisk: *
-		new Setting(containerEl)
-			.setName('Replacement for asterisk')
-			.setDesc('Specify the replacement for *')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.asterisk);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.asterisk = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for question mark: ?
-		new Setting(containerEl)
-			.setName('Replacement for question mark')
-			.setDesc('Specify the replacement for ?')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.questionMark);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.questionMark = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for double quote: "
-		new Setting(containerEl)
-			.setName('Replacement for double quote')
-			.setDesc('Specify the replacement for "')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.doubleQuote);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.doubleQuote = value;
-					await this.plugin.saveSettings();
-				});
-			});
-
-		// Setting for angle brackets: <>
-		new Setting(containerEl)
-			.setName('Replacement for angle brackets')
-			.setDesc('Specify the replacement for < and >')
-			.addDropdown((dropdown) => {
-				this.addReplacementOptions(dropdown);
-				dropdown.setValue(this.plugin.settings.angleBrackets);
-				dropdown.onChange(async (value) => {
-					this.plugin.settings.angleBrackets = value;
-					await this.plugin.saveSettings();
-				});
-			});
+		this.addReplacementSetting('asterisk', 'char.asterisk', '*');
+		this.addReplacementSetting('questionMark', 'char.question-mark', '?');
+		this.addReplacementSetting('doubleQuote', 'char.double-quote', '"');
+		this.addReplacementSetting(
+			'angleBrackets',
+			'char.angle-brackets',
+			t('settings.replacement.and', { a: '<', b: '>' }),
+		);
 	}
 }

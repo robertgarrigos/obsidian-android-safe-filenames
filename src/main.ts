@@ -1,7 +1,8 @@
 import { Notice, Plugin, TAbstractFile, TFile, normalizePath } from 'obsidian';
 import AndroidSafeFilenamesSettingTab from './settings';
+import { t } from './i18n';
 
-interface AndroidSafeFilenamesSettings {
+export interface AndroidSafeFilenamesSettings {
 	autoLint: boolean;
 	squareBrackets: string;
 	numberSign: string;
@@ -40,7 +41,7 @@ export default class AndroidSafeFilenames extends Plugin {
 		// Add a command to lint the current file
 		this.addCommand({
 			id: 'lint-current-file-filename',
-			name: 'Lint the current filename',
+			name: t('command.lint-current'),
 			checkCallback: (checking: boolean) => {
 				// Get current active file if there is one
 				const activeFile = this.app.workspace.getActiveFile();
@@ -63,7 +64,7 @@ export default class AndroidSafeFilenames extends Plugin {
 		// Add a command to lint all files in the vault
 		this.addCommand({
 			id: 'lint-all-filenames',
-			name: 'Lint all filenames in the vault',
+			name: t('command.lint-all'),
 			callback: () => {
 				this.lintAllFilenames();
 			},
@@ -223,13 +224,16 @@ export default class AndroidSafeFilenames extends Plugin {
 
 				// If the file was successfully rename, alert the user
 				new Notice(
-					`"${oldFilename}" renamed to "${newFilename}"`,
+					t('notice.renamed', { old: oldFilename, new: newFilename }),
 					NOTICE_DURATION,
 				);
 			} catch (error) {
 				// If there was an error, alert the user.
 				new Notice(
-					`Unable to rename "${oldFilename}" to "${newFilename}". There probably already exists a file with this name`,
+					t('notice.rename-failed', {
+						old: oldFilename,
+						new: newFilename,
+					}),
 					NOTICE_DURATION,
 				);
 			}
@@ -237,13 +241,13 @@ export default class AndroidSafeFilenames extends Plugin {
 	}
 
 	async lintAllFilenames() {
-		new Notice('Linting all filenames...', NOTICE_DURATION);
+		new Notice(t('notice.linting-all'), NOTICE_DURATION);
 		await Promise.all(
 			// Get all files in the current vault
 			this.app.vault.getFiles().map(async (file) => {
 				await this.lintFilename(file);
 			}),
 		);
-		new Notice('Linted all filenames', NOTICE_DURATION);
+		new Notice(t('notice.linted-all'), NOTICE_DURATION);
 	}
 }

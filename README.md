@@ -46,6 +46,15 @@ If a file with the new name already exists, the file is left as it is and you ge
 
 Back up your vault before linting all filenames for the first time.
 
+## Languages
+
+The plugin follows the language set in Obsidian (Settings → General → Language). It is available in:
+
+- English
+- Catalan (català)
+
+Any other language falls back to English. To add a translation, add its strings to `src/i18n.ts` using the language code listed in [obsidian-translations](https://github.com/obsidianmd/obsidian-translations#existing-languages), and open a pull request.
+
 ## Installing the plugin
 
 ### Manually
@@ -59,6 +68,8 @@ Back up your vault before linting all filenames for the first time.
 
 - New `Lint automatically` setting to rename files on create and rename.
 - Fixed notices disappearing immediately: their duration was set to 30 ms instead of 30 seconds. They now last 10 seconds.
+- Catalan translation, with support for adding other languages.
+- Requires Obsidian 1.8.7 or later, to read the app language.
 - New name, plugin id and documentation.
 
 ## Developing the plugin
