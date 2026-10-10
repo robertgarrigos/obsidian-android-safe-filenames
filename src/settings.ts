@@ -26,6 +26,7 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 		this.autoLint();
 		this.obsidianChars();
 		this.androidChars();
+		this.otherChars();
 	}
 
 	intro(): void {
@@ -113,5 +114,16 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 			'char.angle-brackets',
 			t('settings.replacement.and', { a: '<', b: '>' }),
 		);
+	}
+
+	otherChars(): void {
+		const { containerEl } = this;
+
+		containerEl.createEl('h2', { text: t('settings.other.heading') });
+		containerEl.createEl('p', {
+			text: t('settings.other.desc'),
+		});
+
+		this.addReplacementSetting('equal', 'char.equal', '=');
 	}
 }

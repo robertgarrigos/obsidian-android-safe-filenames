@@ -29,6 +29,10 @@ const en = {
 	'settings.android.desc':
 		'Obsidian for Android will not allow you to create filenames with these characters, but external programs and other Obsidian platforms will. If you sync your vault between Android and non-Android systems using git or other means, these may cause you issues.',
 
+	'settings.other.heading': 'Other troublesome characters',
+	'settings.other.desc':
+		'Users have reported syncing issues with these characters on other systems.',
+
 	'settings.replacement.name': 'Replacement for {name}',
 	'settings.replacement.desc': 'Specify the replacement for {chars}',
 	'settings.replacement.and': '{a} and {b}',
@@ -36,6 +40,7 @@ const en = {
 	'char.square-brackets': 'square brackets',
 	'char.number-sign': 'number sign',
 	'char.caret': 'caret',
+	'char.equal': 'equal sign',
 	'char.pipe': 'pipe',
 	'char.colon': 'colon',
 	'char.asterisk': 'asterisk',
@@ -75,6 +80,10 @@ const ca: Record<TranslationKey, string> = {
 	'settings.android.desc':
 		"Obsidian per a Android no et deixa crear noms d'arxiu amb aquests caràcters, però els programes externs i Obsidian en altres plataformes sí. Si sincronitzes el vault entre Android i altres sistemes amb git o per altres mitjans, et poden donar problemes.",
 
+	'settings.other.heading': 'Altres caràcters problemàtics',
+	'settings.other.desc':
+		'Alguns usuaris han tingut problemes de sincronització amb aquests caràcters en altres sistemes.',
+
 	'settings.replacement.name': 'Substitució: {name}',
 	'settings.replacement.desc': 'Indica per què se substitueix {chars}',
 	'settings.replacement.and': '{a} i {b}',
@@ -82,6 +91,7 @@ const ca: Record<TranslationKey, string> = {
 	'char.square-brackets': 'claudàtors',
 	'char.number-sign': 'coixinet',
 	'char.caret': 'accent circumflex',
+	'char.equal': 'signe igual',
 	'char.pipe': 'barra vertical',
 	'char.colon': 'dos punts',
 	'char.asterisk': 'asterisc',

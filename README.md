@@ -27,6 +27,10 @@ Characters that cause issues for Obsidian links:
 - number sign `#`
 - caret `^`
 
+Other characters that users have reported causing sync issues on other systems:
+
+- equal sign `=`
+
 For each one you choose the replacement: off, empty string, space, hyphen, or hyphen surrounded by spaces. Everything is off by default. Accented and other non-ASCII letters are never changed.
 
 ## Using the plugin
@@ -68,6 +72,7 @@ Any other language falls back to English. To add a translation, add its strings 
 
 - New `Lint automatically` setting to rename files on create and rename.
 - Fixed notices disappearing immediately: their duration was set to 30 ms instead of 30 seconds. They now last 10 seconds.
+- New setting for the equal sign `=`, from [pull request #16](https://github.com/sneakyfoxes/obsidian-safe-filename-linter/pull/16) by [lomky](https://github.com/lomky) to Safe Filename Linter.
 - Catalan translation, with support for adding other languages.
 - Requires Obsidian 1.8.7 or later, to read the app language.
 - New name, plugin id and documentation.

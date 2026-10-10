@@ -7,6 +7,7 @@ export interface AndroidSafeFilenamesSettings {
 	squareBrackets: string;
 	numberSign: string;
 	caret: string;
+	equal: string;
 	pipe: string;
 	colon: string;
 	asterisk: string;
@@ -24,6 +25,7 @@ const DEFAULT_SETTINGS: AndroidSafeFilenamesSettings = {
 	squareBrackets: 'off',
 	numberSign: 'off',
 	caret: 'off',
+	equal: 'off',
 	pipe: 'off',
 	colon: 'off',
 	asterisk: 'off',
@@ -159,6 +161,14 @@ export default class AndroidSafeFilenames extends Plugin {
 				this.settings.caret,
 			);
 			newFilename = newFilename.replaceAll(/\^/gi, replacement);
+		}
+
+		// Handle equal sign
+		if (this.settings.equal !== 'off') {
+			const replacement = this.getReplacementValueFromSetting(
+				this.settings.equal,
+			);
+			newFilename = newFilename.replaceAll(/=/gi, replacement);
 		}
 
 		// Handle pipe
