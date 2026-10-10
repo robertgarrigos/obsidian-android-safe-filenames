@@ -21,7 +21,9 @@ These commands rename files by replacing invalid or troublesome characters with 
 
 ### Automatic invocation
 
-Not yet available.
+Enable `Lint automatically` in the plugin settings to lint filenames whenever a file is created or renamed, including files added by sync. It is off by default.
+
+Files that already exist when you enable it are not renamed until you run `Lint all filenames in the vault` or rename them.
 
 ### Credits
 
