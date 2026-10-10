@@ -82,10 +82,10 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 	obsidianChars(): void {
 		const { containerEl } = this;
 
-		containerEl.createEl('h2', { text: t('settings.obsidian.heading') });
-		containerEl.createEl('p', {
-			text: t('settings.obsidian.desc'),
-		});
+		new Setting(containerEl)
+			.setName(t('settings.obsidian.heading'))
+			.setDesc(t('settings.obsidian.desc'))
+			.setHeading();
 
 		this.addReplacementSetting(
 			'squareBrackets',
@@ -101,10 +101,10 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 	androidChars(): void {
 		const { containerEl } = this;
 
-		containerEl.createEl('h2', { text: t('settings.android.heading') });
-		containerEl.createEl('p', {
-			text: t('settings.android.desc'),
-		});
+		new Setting(containerEl)
+			.setName(t('settings.android.heading'))
+			.setDesc(t('settings.android.desc'))
+			.setHeading();
 
 		this.addReplacementSetting('asterisk', 'char.asterisk', '*');
 		this.addReplacementSetting('questionMark', 'char.question-mark', '?');
@@ -119,10 +119,10 @@ export default class AndroidSafeFilenamesSettingTab extends PluginSettingTab {
 	otherChars(): void {
 		const { containerEl } = this;
 
-		containerEl.createEl('h2', { text: t('settings.other.heading') });
-		containerEl.createEl('p', {
-			text: t('settings.other.desc'),
-		});
+		new Setting(containerEl)
+			.setName(t('settings.other.heading'))
+			.setDesc(t('settings.other.desc'))
+			.setHeading();
 
 		this.addReplacementSetting('equal', 'char.equal', '=');
 	}

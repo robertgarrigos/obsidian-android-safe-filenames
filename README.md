@@ -77,6 +77,15 @@ Any other language falls back to English. To add a translation, add its strings 
 - Requires Obsidian 1.8.7 or later, to read the app language.
 - New name, plugin id and documentation.
 
+## Credits
+
+- [sneaky-foxes](https://github.com/sneaky-foxes) ([Kat Tipton](https://github.com/lomky)), original author of [Safe Filename Linter](https://github.com/sneakyfoxes/obsidian-safe-filename-linter), on which this plugin is based.
+- [Robert Garrigós](https://github.com/robertgarrigos), automatic renaming, translations and maintenance.
+
+## License
+
+[GPL-3.0](./LICENSE.txt), the same license as Safe Filename Linter.
+
 ## Developing the plugin
 
 ### Initial setup
